@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MainMenuController {
+public class MainMenuController{
 
     @FXML
     private AnchorPane MainMenu;
@@ -29,6 +30,14 @@ public class MainMenuController {
 
     @FXML
     private Button settingButton;
+    
+    public Stage window = new Stage();
+    
+    @FXML
+    private Button yesButton;
+
+    @FXML
+    private Button noButton;
 
     @FXML
     public void changeSceneToCredit(ActionEvent event) throws IOException {
@@ -45,23 +54,35 @@ public class MainMenuController {
 			e.printStackTrace();
 		}
     }
-
+    
     @FXML
-    void changeSceneToExit(ActionEvent event) {
+    void changeSceneToExit() {
     	try {
         	Parent exitParent = FXMLLoader.load(getClass().getResource("/ExitConfirmation.fxml"));
         	Scene exitScene = new Scene(exitParent);
         	
-        	Stage window = new Stage();
-        	
         	window.setScene(exitScene);
-        	window.initModality(Modality.APPLICATION_MODAL);
+        	window.setTitle("Exit Base Defence?");
+//        	window.initModality(Modality.APPLICATION_MODAL);
         	
         	window.showAndWait();
-        	
-        	} catch (Exception e) {
-    			e.printStackTrace();
-    		}
+        
+    	} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
+    void closeExitConfirmationScene(ActionEvent event) {
+    	// get a handle to the stage
+    	  Stage stage = (Stage) noButton.getScene().getWindow();
+    	  // do what you have to do
+    	  stage.close();
+    }
+
+    @FXML
+    void closeApplication(ActionEvent event) {
+    	Platform.exit();
     }
     
 }

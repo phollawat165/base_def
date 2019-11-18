@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainMenuController">
    <children>
       <TextFlow layoutX="76.0" layoutY="-14.0" lineSpacing="10.0" prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
          <children>
@@ -17,7 +17,7 @@
             </Text>
          </children>
       </TextFlow>
-      <Button fx:id="yesButton" layoutX="49.0" layoutY="129.0" mnemonicParsing="false" text="Yes" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="120.0" />
-      <Button fx:id="noButton" layoutX="286.0" layoutY="125.0" mnemonicParsing="false" text="No" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="120.0" />
+      <Button fx:id="yesButton" layoutX="49.0" layoutY="129.0" mnemonicParsing="false" onAction="#closeApplication" text="Yes" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="120.0" />
+      <Button fx:id="noButton" layoutX="286.0" layoutY="125.0" mnemonicParsing="false" onAction="#closeExitConfirmationScene" text="No" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="120.0" />
    </children>
 </AnchorPane>
