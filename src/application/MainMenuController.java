@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainMenuController {
@@ -45,4 +46,22 @@ public class MainMenuController {
 		}
     }
 
+    @FXML
+    void changeSceneToExit(ActionEvent event) {
+    	try {
+        	Parent exitParent = FXMLLoader.load(getClass().getResource("/ExitConfirmation.fxml"));
+        	Scene exitScene = new Scene(exitParent);
+        	
+        	Stage window = new Stage();
+        	
+        	window.setScene(exitScene);
+        	window.initModality(Modality.APPLICATION_MODAL);
+        	
+        	window.showAndWait();
+        	
+        	} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    }
+    
 }
