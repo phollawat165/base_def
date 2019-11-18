@@ -84,5 +84,20 @@ public class MainMenuController{
     void closeApplication(ActionEvent event) {
     	Platform.exit();
     }
+    @FXML
+    void toTutorial(ActionEvent event) throws IOException {
+    	try {
+    	Parent tutorialParent = FXMLLoader.load(getClass().getResource("/Tutorial1.fxml"));
+    	Scene tutorialScene = new Scene(tutorialParent);
+    	
+    	Stage window = (Stage)(((Node) event.getSource()).getScene().getWindow());
+    	
+    	window.setScene(tutorialScene);
+    	window.show();
+    	
+    	} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
     
 }
