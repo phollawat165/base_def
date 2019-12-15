@@ -1,6 +1,6 @@
 package gui;
 
-import gui.tutorial.AddButtonEventHandler;
+import gui.SelectCharactor.AddButtonEventHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -115,7 +115,7 @@ public class EndGame implements SceneChanger {
 		        new EventHandler<MouseEvent>() {
 		          @Override
 		          public void handle(MouseEvent e) {
-		        	  textPA.setFont(new Font("Arial", 30));
+		        	  textE.setFont(new Font("Arial", 30));
 		        	  
 		          }
 		        });

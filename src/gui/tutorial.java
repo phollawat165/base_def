@@ -25,6 +25,7 @@ public class tutorial implements SceneChanger {
 	private Button back = new Button();
 	private Button skip = new Button();
 	private Text text1 = new Text("TUTORIAL");
+	private Text textT = new Text();
 	private Text textN = new Text("");
 	private Text textB = new Text("");
 	private Text textS = new Text("V");
@@ -157,13 +158,22 @@ public class tutorial implements SceneChanger {
         else if(page == 6) tuPane.getChildren().addAll(text1,back);
         else tuPane.getChildren().addAll(text1,next,back);
 		
+		String script = setText();
+		textT.setText(script);
+		textT.setFill(Color.MEDIUMAQUAMARINE);
+	    textT.setFont(new Font("Arial", 20));
+	    StackPane.setAlignment(textT, Pos.CENTER);
+	    
+		
+		
+		
 		Background bg = new Background(3);
 		ImageView image = bg.getImage();
 		
 		image.setFitHeight(600);
 		image.setFitWidth(800);
 		
-		root.getChildren().addAll(image,tuPane,mute,skip);
+		root.getChildren().addAll(image,tuPane,mute,skip,textT);
 	}
 	@Override
 	public void setUpAddButtonEvent(Button addButton,int k) {
@@ -221,5 +231,27 @@ public class tutorial implements SceneChanger {
 		}
 
 	}
+	public String setText() {
+		String des;
+		 switch(page) {
+			case 1 : des = "<< Use your mouse cursor to control your "
+					+"\n\n  ship movement and bullet direction. >>"; 
+			break;
+			case 2 : des = "<< The ship will do auto-fire for you."
+			        +"\n\n  Try to shoot down all enemies. >>"; 
+			break;
+			case 3 : des = "<< When the enemies hit you will lose "
+					+"\n\n  your health point, so try to avoid them. >>"; 
+			break;
+			case 4 : des = "<< We have 3 types of ship for you to choose,"
+					+"\n\n  try the one that suit for you. >>"; 
+			break;			
+			case 5 : des = "<< When the gauge reach it point, you can use"
+					+"\n\n  your skill to have an advantage in the game. >>"; 
+			break;
+			default : des = "<< The more time you survive,"+
+					"\n\n  the more score point you gain. >>";
+	}
+		 return des;
 	
-}
+}}

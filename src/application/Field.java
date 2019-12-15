@@ -7,6 +7,7 @@ import Object.Bullet;
 import Object.Enemy;
 import Object.GameObject;
 import Object.Player;
+import ScoreBoard.Status;
 import gui.EndGame;
 import gui.SelectCharactor;
 import gui.Song;
@@ -22,32 +23,39 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logic.LevelOfStage;
+import logic.Penetrate;
 import logic.Skills;
 import logic.Timer;
 import logic.Character;
 import logic.Heal;
+import logic.Immortal;
 
 public class Field extends Pane {
 	
-
 	private static Pane root;
 	private static int w = 750;
 	private static int h = 600;
+	
 	public static boolean isStart = false;
+	
 	private static List<Bullet> bullets = new ArrayList<>();
 	private List<Enemy> enemies = new ArrayList<>();
+	
 	private AnimationTimer timer;
 	private int currentHP;
 	private int ShipNuimber;
 
-
 	private int deploy = 0;
+	private int STATUS_INT=0;
+	private int countDown =0;
 
 	// test character
 	public logic.Character character;
 	public Skills skill;
 	public static Player player;
+	
 	private LevelOfStage levels = new LevelOfStage();
+	
 	public Parent createContent(int k) {
 		ShipNuimber = k;
 		isStart = true;
@@ -56,15 +64,14 @@ public class Field extends Pane {
 
 		// test character
 		character = new Character(ShipNuimber);
-		skill = new Heal();
+		initializeSkill(ShipNuimber);
 		
 		player = new Player(ShipNuimber);
-		// test character
+		
 		Player.health = character.getHealth();
 		player.setTopspeed(character.getTopspeed());
 		
 		currentHP = character.getHealth();
-		
 		
 		addGameObject(player, player.getLocation().getX(), player.getLocation().getY());
 
@@ -78,6 +85,7 @@ public class Field extends Pane {
 		};
 		timer.start();
 		GamePlay.HP.getHpBar().update(getHPString());
+		GamePlay.GS.getStatus().update(getStatusInt());
 
 		return root;
 	}
@@ -92,9 +100,12 @@ public class Field extends Pane {
 		for (Bullet bullet : bullets) {
 			for (Enemy enemy : enemies) {
 				if (bullet.isColliding(enemy)) {
-					bullet.setAlive(false);
+					if(!((skill instanceof Penetrate) && (((Penetrate) skill).isActive()))) {
+						bullet.setAlive(false);
+						root.getChildren().remove(bullet.getView());
+					}   
 					enemy.setAlive(false);
-					root.getChildren().removeAll(bullet.getView(), enemy.getView());
+					root.getChildren().remove(enemy.getView());
 					skill.incresingGauge();
 				}
 			}
@@ -109,7 +120,9 @@ public class Field extends Pane {
 		for (Enemy enemy : enemies) {
 			if (enemy.isColliding(player)) {
 				enemy.setAlive(false);
-				Player.health--;
+				if(!((skill instanceof Immortal) && (((Immortal) skill).isActive()))) {
+					Player.health--;
+				}
 				if (Player.health <= 0) {
 					player.setAlive(false);
 					root.getChildren().remove(player.getView());
@@ -117,7 +130,6 @@ public class Field extends Pane {
 				System.out.println("Player's Health is "+Player.health);
 				root.getChildren().remove(enemy.getView());
 			}
-		
 		}
 		// update player movement
 		player.update();
@@ -128,12 +140,37 @@ public class Field extends Pane {
 		bulletFireRate();
 		// set skill counter
 		skill.setting();
+		// set Penetrate counter
+		if((skill instanceof Penetrate) && (((Penetrate) skill).isActive())) {
+			((Penetrate) skill).counting();
+		}
+		// set Immortal counter
+		if((skill instanceof Immortal) && (((Immortal) skill).isActive())) {
+			((Immortal) skill).counting();
+		}
 		// end process wait to fix ending screen (create & implement ending screen
 		// method)
 		if(currentHP != Player.health) {
 			currentHP = Player.health;
 			GamePlay.HP.getHpBar().update(getHPString());
 		}
+		if(countDown == 300) {
+			countDown = 0;
+			if(Status.statusInt>1 && Status.statusInt<6 )
+			Status.statusInt = 1;
+			GamePlay.GS.getStatus().update(getStatusInt());
+		}
+		if(Status.statusInt>1 && Status.statusInt<6 ) {
+			countDown++;
+		}
+		else {
+			countDown=0;
+		}
+		if(STATUS_INT != Status.statusInt) {
+			STATUS_INT = Status.statusInt;
+			GamePlay.GS.getStatus().update(getStatusInt());
+		}
+		
 		if (player.isDead()) {
 			timer.stop();
 			GamePlay.score.startStopHandle();
@@ -228,6 +265,20 @@ public class Field extends Pane {
 			deploy = 0;
 		}
 	}
+	
+	private void initializeSkill(int k) {
+		switch (k) {
+		case 1:
+			skill = new Immortal();
+			break;
+		case 2:
+			skill = new Penetrate();
+			break;
+		case 3:
+			skill = new Heal();
+			break;
+		}
+	}
 
 	public static int getW() {
 		return w;
@@ -239,6 +290,11 @@ public class Field extends Pane {
 	private String getHPString() {
 		return Integer.toString(Player.health)+"/"+
 	Integer.toString(character.getHealth());
+		// implement your code here
+		
+	}
+	private int getStatusInt() {
+		return Status.statusInt;
 		// implement your code here
 		
 	}

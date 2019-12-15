@@ -1,3 +1,4 @@
+
 package logic;
 
 public abstract class Skills {
@@ -23,10 +24,22 @@ public abstract class Skills {
 		}
 	}
 	
-	public abstract void incresingGauge();
+	public void incresingGauge() {
+		if (gauge < maxGauge)
+			gauge++;
+			System.out.println("Gauge : "+gauge);
+		if (((int) (gauge / ready) > skillStack) && (skillStack < maxSkillStack)) {
+			skillStack++;
+			System.out.println("Skill : Heal : " + skillStack);
+		}    
+	}
 	
 	public abstract void pressSkill();
 	
-	protected abstract boolean skillReady();
+	protected boolean skillReady() {
+		if (gauge >= ready)
+			return true;
+		return false;
+	}
 	
 }

@@ -31,11 +31,19 @@ public class Charactor implements SceneChanger {
 	private StackPane root = new StackPane();
 	private VBox bar;
 	private VBox name;
+	private Text textT = new Text();
 	private MuteButton mute = new MuteButton();
+	private ItemButton CHbutton;
 	
 	private int number;
 	
 	public Charactor(int number) {
+		CHbutton = new ItemButton(Integer.toString(number));
+		String script = setText(number);
+		textT.setText(script);
+		textT.setFill(Color.CYAN);
+	    textT.setFont(new Font("Arial", 15));
+	    
 		setUpAddButtonEvent(mute, 0);
 		StackPane.setAlignment(mute, Pos.TOP_LEFT);
 		this.number = number;
@@ -84,8 +92,13 @@ public class Charactor implements SceneChanger {
         
         AnchorPane.setLeftAnchor(name, 425.0);
         AnchorPane.setTopAnchor(name, 132.0);
-
         
+        AnchorPane.setLeftAnchor(textT, 440.0);
+        AnchorPane.setTopAnchor(textT, 300.0);
+        
+        AnchorPane.setBottomAnchor(CHbutton, 230.0);
+		AnchorPane.setLeftAnchor(CHbutton, 90.0);
+
         
         setUpAddButtonEvent(start, 1);
         setUpAddButtonEvent(back, -1);
@@ -105,7 +118,7 @@ public class Charactor implements SceneChanger {
 	}
 	public void createPane() {
 		
-		CharactorPane.getChildren().addAll(bar,name,start,back);
+		CharactorPane.getChildren().addAll(bar,name,start,back,textT,CHbutton);
 		Background bg = new Background(4);
 		ImageView image = bg.getImage();
 		
@@ -114,6 +127,24 @@ public class Charactor implements SceneChanger {
 		
 		root.getChildren().addAll(image,CharactorPane,mute);
 	}
+	public String setText(int number) {
+		String script;
+		switch(number) {
+		case 1 : script = "This is the normal ship which has balance stat.\n\n"
+				+"It has skill to create an energy shield\n\n"+
+				"that will defend any kind of attack\n\n"
+				+"when it has enough energy.";
+			break;
+		case 2 : script = "This is the speed ship which has the\n\n"
+				+"fastest speed but exchange for it weak body.\n\n"
+		        +"It has skill to shoot bullets that can penetrate \n\n"+
+		        "everything when it has enough energy.";
+		   break;
+		default : script = "This is the tank ship which has entire ship covers\n\n"
+				+"by the armor ,by the way ,it is the slowet ship.\n\n"
+				+"It has skill to fixs itself when it has enough energy.";
+	}
+		return script;}
 	
 	@Override
 	public void setUpAddButtonEvent(Button addButton,int k) {

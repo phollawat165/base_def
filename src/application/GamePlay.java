@@ -6,6 +6,7 @@ import Object.Bullet;
 import Object.Player;
 import ScoreBoard.GameBar;
 import ScoreBoard.HPbar;
+import ScoreBoard.Status;
 import gui.Background;
 import gui.BarChartPane;
 import gui.Song;
@@ -39,6 +40,7 @@ public class GamePlay extends Application{
 	public static int number;
 	public static Scene scene;
 	public static HpRealTime HP;
+	public static GameStatus GS;
 	
 	public GamePlay(int k) {
 		number = k;
@@ -52,12 +54,13 @@ public class GamePlay extends Application{
 		HBox BG = new HBox();
 		Song song = new Song(0);
 		HP = new HpRealTime();
+		GS = new GameStatus();
 		
 		StackPane root = new StackPane();
 		StackPane root2 = new StackPane();
 		score = new Timer();
 		VBox scorepane = new VBox();
-		scorepane.getChildren().addAll(score.getScore(),HP,score.getGameBar());
+		scorepane.getChildren().addAll(score.getScore(),HP,score.getGameBar(),GS);
         scorepane.setSpacing(20);
         scorepane.setPadding(new Insets(20));
 		Background bg = new Background(6);
@@ -91,19 +94,19 @@ public class GamePlay extends Application{
             ms = new Point2D(e.getX(), e.getY());
         });
 		
-		// try
-//		primaryStage.getScene().setOnKeyPressed(e -> {
-//            if (e.getCode() == KeyCode.LEFT) {
-//                Field.player.rotateLeft();
-//            } else if (e.getCode() == KeyCode.RIGHT) {
-//                Field.player.rotateRight();
-//            } else if (e.getCode() == KeyCode.SPACE) {
-//                Bullet bullet = new Bullet();
-//                bullet.setVelocity(Field.player.getVelocity().normalize().multiply(5));
-//                Field.addBullet(bullet, Field.player.getView().getTranslateX() + 25, Field.player.getView().getTranslateY() + 25);
-//            }
-//        });
-		// 'til here
+		try {
+			primaryStage.getScene().setOnKeyPressed(e -> {
+	            if (e.getCode() == KeyCode.SPACE) {
+	            	field.skill.pressSkill();
+	            } else if (e.getCode() == KeyCode.G) {
+	                Bullet bullet = new Bullet();
+	                bullet.setVelocity(Field.player.getVelocity().normalize().multiply(5));
+	                Field.addBullet(bullet, Field.player.getView().getTranslateX() + 25, Field.player.getView().getTranslateY() + 25);
+	            }
+	        });
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		
 		primaryStage.show();
 	}
@@ -127,6 +130,31 @@ public class GamePlay extends Application{
 			return hpbar;
 		}
 		
+	}
+	class GameStatus extends VBox {
+		private Text label = new Text("STATUS");
+		private Status status;
+		public GameStatus() {this.setAlignment(Pos.CENTER);
+		this.setSpacing(10);
+		this.setPadding(new Insets(10));
+		this.setAlignment(Pos.CENTER);
+		this.label.setFill(Color.MEDIUMAQUAMARINE);
+	    this.label.setFont(new Font("Arial", 30));
+	    Glow glow = new Glow();
+	    glow.setLevel(10);  
+	    this.label.setEffect(glow);
+		this.status = new Status();
+		this.getChildren().addAll(label,status);
+		// implement your code here
+		
+	}
+
+
+	public Status getStatus() {
+		return status;
+	}
+
+
 	}
 
 

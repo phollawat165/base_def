@@ -44,6 +44,7 @@ public class Main extends Application {
 		Song song = new Song(1);
 		// TODO Implement Main
 		Text text1 = new Text(" START");
+		Text name = new Text("            \n\nBASE DEFENCE");
 		Text exit = new Text("EXIT");
 		
 		MuteButton mute = new MuteButton();
@@ -52,6 +53,10 @@ public class Main extends Application {
 	      text1.setFill(Color.PALETURQUOISE);
 	      
 	      text1.setFont(new Font("Arial", 26));
+	      
+	      name.setFill(Color.PALETURQUOISE);
+	      
+	      name.setFont(new Font("Arial", 28));
 	      
 	      exit.setFill(Color.WHITE);
 	      
@@ -68,7 +73,9 @@ public class Main extends Application {
 	      glow.setLevel(40);  
 	      
 	      text1.setEffect(glow);
-	      
+	      name.setEffect(glow);
+	      exit.setEffect(glow);
+	      StackPane.setAlignment(name, Pos.TOP_CENTER);
         
 		StackPane root = new StackPane();
 		
@@ -121,7 +128,7 @@ public class Main extends Application {
 	
 		Background bg = new Background(2);
 		ImageView background = bg.getImage();
-		root.getChildren().addAll(background,start,Exit,mute);
+		root.getChildren().addAll(background,start,Exit,mute,name);
 		Scene scene2 = new Scene(root,800,600);
 		
 		
