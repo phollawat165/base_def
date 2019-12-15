@@ -98,11 +98,12 @@ public class GamePlay extends Application{
 			primaryStage.getScene().setOnKeyPressed(e -> {
 	            if (e.getCode() == KeyCode.SPACE) {
 	            	field.skill.pressSkill();
-	            } else if (e.getCode() == KeyCode.G) {
-	                Bullet bullet = new Bullet();
-	                bullet.setVelocity(Field.player.getVelocity().normalize().multiply(5));
-	                Field.addBullet(bullet, Field.player.getView().getTranslateX() + 25, Field.player.getView().getTranslateY() + 25);
-	            }
+	            } 
+//	            else if (e.getCode() == KeyCode.G) {
+//	                Bullet bullet = new Bullet();
+//	                bullet.setVelocity(Field.player.getVelocity().normalize().multiply(5));
+//	                Field.addBullet(bullet, Field.player.getView().getTranslateX() + 25, Field.player.getView().getTranslateY() + 25);
+//	            }
 	        });
 			} catch (Exception e) {
 				// TODO: handle exception
